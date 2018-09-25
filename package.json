@@ -1,6 +1,6 @@
 {
   "name": "@ianwalter/clone",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A configurable utility to clone JavaScript data (Objects, Arrays, etc)",
   "main": "dist/clone.js",
   "umd:main": "dist/clone.umd.js",
