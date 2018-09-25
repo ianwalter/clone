@@ -1,6 +1,15 @@
 const clone = require('../')
 
-test('clone does not add setters when objectCreate is false', () => {
+test('clones an Array', () => {
+  const list = [88, 'peach', [null, new Date()]]
+  const copy = clone(list)
+  expect(list).toEqual(copy)
+  const mutated = 'mutated'
+  copy.map(i => mutated)
+  expect(list.every(i => i !== mutated)).toBe(true)
+})
+
+test('clone does not have Object setter when objectCreate is false', () => {
   const store = { write: 0 }
   const person = {
     set name (_) {

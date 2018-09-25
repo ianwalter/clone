@@ -76,6 +76,8 @@ function baseClone (src, circulars, clones, options) {
   return src
 }
 
-module.exports = function clone (src, options = defaultOptions) {
+function clone (src, options = defaultOptions) {
   return baseClone(src, [], [], options)
 }
+
+module.exports = clone
