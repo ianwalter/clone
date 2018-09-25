@@ -1,0 +1,40 @@
+{
+  "name": "clone",
+  "version": "1.0.0",
+  "description": "A configurable utility to clone JavaScript data (Objects, Arrays, etc)",
+  "main": "dist/clone.js",
+  "umd:main": "dist/clone.umd.js",
+  "module": "dist/clone.m.js",
+  "scripts": {
+    "build": "microbundle build index.js",
+    "watch": "microbundle watch index.js",
+    "test": "npm run build && jest"
+  },
+  "keywords": [
+    "clone",
+    "copy",
+    "deep",
+    "Object.create",
+    "getter",
+    "setter",
+    "vuex"
+  ],
+  "author": "Ian Walter <public@iankwalter.com> (https://iankwalter.com)",
+  "license": "ISC",
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "jest": "^23.6.0",
+    "microbundle": "^0.6.0",
+    "np": "^3.0.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ianwalter/clone.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ianwalter/clone/issues"
+  },
+  "homepage": "https://github.com/ianwalter/clone#readme"
+}
