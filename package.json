@@ -1,5 +1,5 @@
 {
-  "name": "clone",
+  "name": "@ianwalter/clone",
   "version": "1.0.0",
   "description": "A configurable utility to clone JavaScript data (Objects, Arrays, etc)",
   "main": "dist/clone.js",
