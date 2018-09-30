@@ -12,6 +12,7 @@ test('clones an Array', () => {
 test('clone does not have Object setter when objectCreate is false', () => {
   const store = { write: 0 }
   const person = {
+    get name () {},
     set name (_) {
       store.write++
     }
