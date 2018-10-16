@@ -57,7 +57,7 @@ function baseClone (src, circulars, clones, options) {
       obj = Object.create(src)
     } else {
       keys.forEach(function (key) {
-        obj[key] = baseClone(src[key], circulars, clones, options)
+        obj[key] = baseClone(src[key], [], [], options)
       })
     }
     clones.push(obj)

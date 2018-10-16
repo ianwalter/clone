@@ -1,4 +1,9 @@
+const Vue = require('vue')
+const Vuex = require('vuex')
+
 const clone = require('../')
+
+Vue.use(Vuex)
 
 test('clone can clone an Array', () => {
   const list = [88, 'peach', [null, new Date()]]
@@ -27,4 +32,15 @@ test('clone does not have Object setter when objectCreate is false', () => {
   copy.fullName = 'Old Gregg'
   expect([copy.firstName, copy.lastName]).toEqual(['Ian', 'Walter'])
   expect(src.fullName).toBe('Ian Walter')
+})
+
+test('clone can clone Vuex store state when objectCreate is false', () => {
+  const message = 'Hello!'
+  const name = 'The Wheel'
+  const store = new Vuex.Store({
+    state: { message },
+    modules: { song: { state: { name } } }
+  })
+  const copy = clone(store.state, { objectCreate: false })
+  expect(copy).toEqual({ message, song: { name } })
 })
