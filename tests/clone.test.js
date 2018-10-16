@@ -1,6 +1,6 @@
 const clone = require('../')
 
-test('clones an Array', () => {
+test('clone can clone an Array', () => {
   const list = [88, 'peach', [null, new Date()]]
   const copy = clone(list)
   expect(list).toEqual(copy)
@@ -10,16 +10,21 @@ test('clones an Array', () => {
 })
 
 test('clone does not have Object setter when objectCreate is false', () => {
-  const store = { write: 0 }
-  const person = {
-    get name () {},
-    set name (_) {
-      store.write++
+  const src = {
+    firstName: 'Ian',
+    lastName: 'Walter',
+    get fullName () {
+      return this.firstName + ' ' + this.lastName
+    },
+    set fullName (name) {
+      const [firstName, lastName] = name.split(' ')
+      this.firstName = firstName
+      this.lastName = lastName
     }
   }
-  person.name = 'Old Gregg'
-  const newPerson = clone(person, { objectCreate: false })
-  expect(newPerson.name).toBe(person.name)
-  newPerson.name = 'Barry Badrinath'
-  expect(store.write).toBe(1)
+  const copy = clone(src, { objectCreate: false })
+  expect([copy.firstName, copy.lastName]).toEqual(['Ian', 'Walter'])
+  copy.fullName = 'Old Gregg'
+  expect([copy.firstName, copy.lastName]).toEqual(['Ian', 'Walter'])
+  expect(src.fullName).toBe('Ian Walter')
 })
