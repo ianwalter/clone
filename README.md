@@ -30,6 +30,11 @@ import clone from '@ianwalter/clone'
 const clonedBook = clone(book, { objectCreate: false })
 ```
 
+## License
+
+Apache 2.0 with Commons Clause - See [LICENSE](https://github.com/ianwalter/clone/blob/master/LICENSE)
+
 &nbsp;
 
-ISC &copy; [Ian Walter](https://iankwalter.com)
+Created by [Ian Walter](https://iankwalter.com)
+
