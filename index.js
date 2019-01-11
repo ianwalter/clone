@@ -78,6 +78,7 @@ function baseClone (src, circulars, clones, options) {
   return src
 }
 
-export default function clone (src, options = { objectCreate: true }) {
+export default function clone (src, options) {
+  options = options || { objectCreate: true }
   return baseClone(src, [], [], options)
 }
