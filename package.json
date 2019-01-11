@@ -1,6 +1,6 @@
 {
   "name": "@ianwalter/clone",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A configurable utility to clone JavaScript data (Objects, Arrays, etc)",
   "module": "dist/clone.m.js",
   "main": "dist/clone.js",
