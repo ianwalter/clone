@@ -1,5 +1,3 @@
-const defaultOptions = { objectCreate: true }
-
 // ES6 Map
 let map
 try {
@@ -80,6 +78,6 @@ function baseClone (src, circulars, clones, options) {
   return src
 }
 
-export default function clone (src, options = defaultOptions) {
+export default function clone (src, options = { objectCreate: true }) {
   return baseClone(src, [], [], options)
 }

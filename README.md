@@ -1,6 +1,8 @@
 # @ianwalter/clone
 > A configurable utility to clone JavaScript data (Objects, Arrays, etc)
 
+[![npm page][npmImage]][npmUrl]
+
 ## About
 
 I created clone because I wanted to use the terrific
@@ -38,4 +40,6 @@ Apache 2.0 with Commons Clause - See [LICENSE][licenseUrl]
 
 Created by [Ian Walter](https://iankwalter.com)
 
+[npmImage]: https://img.shields.io/npm/v/@ianwalter/clone.svg
+[npmUrl]: https://www.npmjs.com/package/@ianwalter/clone
 [licenseUrl]: https://github.com/ianwalter/clone/blob/master/LICENSE
