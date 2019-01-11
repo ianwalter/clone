@@ -4,13 +4,17 @@ const defaultOptions = { objectCreate: true }
 let map
 try {
   map = Map
-} catch (_) { }
+} catch (_) {
+  // Handling the error is unnecessary.
+}
 
 // ES6 Set
 let set
 try {
   set = Set
-} catch (_) { }
+} catch (_) {
+  // Handling the error is unnecessary.
+}
 
 function baseClone (src, circulars, clones, options) {
   // Null/undefined/functions/etc
@@ -76,8 +80,6 @@ function baseClone (src, circulars, clones, options) {
   return src
 }
 
-function clone (src, options = defaultOptions) {
+export default function clone (src, options = defaultOptions) {
   return baseClone(src, [], [], options)
 }
-
-module.exports = clone

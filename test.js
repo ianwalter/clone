@@ -1,20 +1,21 @@
-const Vue = require('vue')
-const Vuex = require('vuex')
+import test from 'ava'
+import Vue from 'vue'
+import Vuex from 'vuex'
 
-const clone = require('../')
+import clone from '.'
 
 Vue.use(Vuex)
 
-test('clone can clone an Array', () => {
+test('clone can clone an Array', t => {
   const list = [88, 'peach', [null, new Date()]]
   const copy = clone(list)
-  expect(list).toEqual(copy)
+  t.deepEqual(list, copy)
   const mutated = 'mutated'
   copy.map(i => mutated)
-  expect(list.every(i => i !== mutated)).toBe(true)
+  t.true(list.every(i => i !== mutated))
 })
 
-test('clone does not have Object setter when objectCreate is false', () => {
+test('clone does not have Object setter when objectCreate is false', t => {
   const src = {
     firstName: 'Ian',
     lastName: 'Walter',
@@ -28,13 +29,13 @@ test('clone does not have Object setter when objectCreate is false', () => {
     }
   }
   const copy = clone(src, { objectCreate: false })
-  expect([copy.firstName, copy.lastName]).toEqual(['Ian', 'Walter'])
+  t.deepEqual([copy.firstName, copy.lastName], ['Ian', 'Walter'])
   copy.fullName = 'Old Gregg'
-  expect([copy.firstName, copy.lastName]).toEqual(['Ian', 'Walter'])
-  expect(src.fullName).toBe('Ian Walter')
+  t.deepEqual([copy.firstName, copy.lastName], ['Ian', 'Walter'])
+  t.deepEqual(src.fullName, 'Ian Walter')
 })
 
-test('clone can clone Vuex store state when objectCreate is false', () => {
+test('clone can clone Vuex store state when objectCreate is false', t => {
   const message = 'Hello!'
   const name = 'The Wheel'
   const store = new Vuex.Store({
@@ -42,5 +43,5 @@ test('clone can clone Vuex store state when objectCreate is false', () => {
     modules: { song: { state: { name } } }
   })
   const copy = clone(store.state, { objectCreate: false })
-  expect(copy).toEqual({ message, song: { name } })
+  t.deepEqual(copy, { message, song: { name } })
 })
