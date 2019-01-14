@@ -7,9 +7,9 @@
 
 I created clone because I wanted to use the terrific
 [nanoclone](https://github.com/Kelin2025/nanoclone) utility but also be able to
-configure how it clones Objects. With the `objectCreate` option, you can decide
-whether Objects will be cloned using `Object.create` (the default, `true`) or by
-iterating over the Object's keys (`false`).
+configure how it clones Objects. With the `proto` option, you can decide whether
+Objects that are cloned will receive the source Object's prototype (`true`) or
+won't (the default, `false`).
 
 The difference, for my purposes, is to be able to clone an Object without
 cloning it's getters and setters. The state management library
@@ -29,7 +29,8 @@ npm install @ianwalter/clone --save
 ```js
 import clone from '@ianwalter/clone'
 
-const clonedBook = clone(book, { objectCreate: false })
+const clonedBook = clone(book)
+const clonedBookWithProto = clone(book, { proto: true })
 ```
 
 ## License

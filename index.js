@@ -1,20 +1,12 @@
 // ES6 Map
 let map
-try {
-  map = Map
-} catch (_) {
-  // Handling the error is unnecessary.
-}
+try { map = Map } catch (_) { /* Handling the error is unnecessary. */ }
 
 // ES6 Set
 let set
-try {
-  set = Set
-} catch (_) {
-  // Handling the error is unnecessary.
-}
+try { set = Set } catch (_) { /* Handling the error is unnecessary. */ }
 
-function baseClone (src, circulars, clones, options) {
+function baseClone (src, circulars, clones, opts) {
   // Null/undefined/functions/etc
   if (!src || typeof src !== 'object' || typeof src === 'function') {
     return src
@@ -37,7 +29,7 @@ function baseClone (src, circulars, clones, options) {
 
   // Arrays
   if (Array.isArray(src)) {
-    return src.map(i => clone(i, options))
+    return src.map(i => clone(i, opts))
   }
 
   // ES6 Maps
@@ -53,23 +45,14 @@ function baseClone (src, circulars, clones, options) {
   // Object
   if (src instanceof Object) {
     circulars.push(src)
-    let keys = Object.keys(src)
     let obj = {}
-    if (options.objectCreate) {
+    if (opts.proto) {
       obj = Object.create(src)
-    } else {
-      keys.forEach(function (key) {
-        obj[key] = baseClone(src[key], [], [], options)
-      })
     }
     clones.push(obj)
-    keys.forEach(function (key) {
-      const idx = circulars.findIndex(function (i) {
-        return i === src[key]
-      })
-      obj[key] = idx > -1
-        ? clones[idx]
-        : baseClone(src[key], circulars, clones, options)
+    Object.keys(src).forEach(k => {
+      const i = circulars.findIndex(i => i === src[k])
+      obj[k] = i > -1 ? clones[i] : baseClone(src[k], circulars, clones, opts)
     })
     return obj
   }
@@ -78,7 +61,6 @@ function baseClone (src, circulars, clones, options) {
   return src
 }
 
-export default function clone (src, options) {
-  options = options || { objectCreate: true }
-  return baseClone(src, [], [], options)
+export default function clone (src, opts = { proto: false }) {
+  return baseClone(src, [], [], opts)
 }
