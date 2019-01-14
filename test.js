@@ -15,7 +15,28 @@ test('clone can clone an Array', t => {
   t.true(list.every(i => i !== mutated))
 })
 
-test('clone does not have Object setter when proto is false', t => {
+test('clone can clone Vuex store state when proto is false', t => {
+  const message = 'Hello!'
+  const name = 'The Wheel'
+  const store = new Vuex.Store({
+    state: { message },
+    modules: {
+      song: {
+        namespaced: true,
+        state: { name },
+        mutations: {
+          name: (state, name) => (state.name = name)
+        }
+      }
+    }
+  })
+  const copy = clone(store.state)
+  t.deepEqual(copy, { message, song: { name } })
+  store.commit('song/name', 'Desire')
+  t.is(copy.song.name, name)
+})
+
+test('clone has Object setter when proto is true', t => {
   const src = {
     firstName: 'Ian',
     lastName: 'Walter',
@@ -28,20 +49,8 @@ test('clone does not have Object setter when proto is false', t => {
       this.lastName = lastName
     }
   }
-  const copy = clone(src)
+  const copy = clone(src, { proto: true })
   t.deepEqual([copy.firstName, copy.lastName], ['Ian', 'Walter'])
   copy.fullName = 'Old Gregg'
-  t.deepEqual([copy.firstName, copy.lastName], ['Ian', 'Walter'])
-  t.deepEqual(src.fullName, 'Ian Walter')
-})
-
-test('clone can clone Vuex store state when objectCreate is false', t => {
-  const message = 'Hello!'
-  const name = 'The Wheel'
-  const store = new Vuex.Store({
-    state: { message },
-    modules: { song: { state: { name } } }
-  })
-  const copy = clone(store.state)
-  t.deepEqual(copy, { message, song: { name } })
+  t.deepEqual([copy.firstName, copy.lastName], ['Old', 'Gregg'])
 })

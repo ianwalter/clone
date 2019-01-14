@@ -7,13 +7,13 @@
 
 I created clone because I wanted to use the terrific
 [nanoclone](https://github.com/Kelin2025/nanoclone) utility but also be able to
-configure how it clones objects. With the `proto` option, you can decide whether
-objects that are cloned will receive the source object's prototype (`true`) or
+configure how it clones Objects. With the `proto` option, you can decide whether
+Objects that are cloned will receive the source Object's prototype (`true`) or
 won't (the default, `false`).
 
-The difference, for my purposes, is to be able to clone an object without
+The difference, for my purposes, is to be able to clone an Object without
 cloning it's getters and setters. The state management library
-[Vuex](https://vuex.vuejs.org) uses object getters and setters for it's
+[Vuex](https://vuex.vuejs.org) uses Object getters and setters for it's
 "reactive" functionality and there are times when you might want to extract and
 mutate data from the store without those mutations affecting the original data
 in the store.
