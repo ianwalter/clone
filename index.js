@@ -55,18 +55,12 @@ function baseClone (src, circulars, clones, options) {
     circulars.push(src)
     let keys = Object.keys(src)
     let obj = {}
-    if (options.objectCreate) {
+    if (options.proto) {
       obj = Object.create(src)
-    } else {
-      keys.forEach(function (key) {
-        obj[key] = baseClone(src[key], [], [], options)
-      })
     }
     clones.push(obj)
-    keys.forEach(function (key) {
-      const idx = circulars.findIndex(function (i) {
-        return i === src[key]
-      })
+    keys.forEach(key => {
+      const idx = circulars.findIndex(i => i === src[key])
       obj[key] = idx > -1
         ? clones[idx]
         : baseClone(src[key], circulars, clones, options)
@@ -78,7 +72,6 @@ function baseClone (src, circulars, clones, options) {
   return src
 }
 
-export default function clone (src, options) {
-  options = options || { objectCreate: true }
+export default function clone (src, options = { proto: false }) {
   return baseClone(src, [], [], options)
 }
