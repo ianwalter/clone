@@ -53,13 +53,12 @@ function baseClone (src, circulars, clones, options) {
   // Object
   if (src instanceof Object) {
     circulars.push(src)
-    let keys = Object.keys(src)
     let obj = {}
     if (options.proto) {
       obj = Object.create(src)
     }
     clones.push(obj)
-    keys.forEach(key => {
+    Object.keys(src).forEach(key => {
       const idx = circulars.findIndex(i => i === src[key])
       obj[key] = idx > -1
         ? clones[idx]
