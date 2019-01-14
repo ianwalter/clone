@@ -15,7 +15,7 @@ test('clone can clone an Array', t => {
   t.true(list.every(i => i !== mutated))
 })
 
-test('clone does not have Object setter when objectCreate is false', t => {
+test('clone does not have Object setter when proto is false', t => {
   const src = {
     firstName: 'Ian',
     lastName: 'Walter',
@@ -28,7 +28,7 @@ test('clone does not have Object setter when objectCreate is false', t => {
       this.lastName = lastName
     }
   }
-  const copy = clone(src, { objectCreate: false })
+  const copy = clone(src)
   t.deepEqual([copy.firstName, copy.lastName], ['Ian', 'Walter'])
   copy.fullName = 'Old Gregg'
   t.deepEqual([copy.firstName, copy.lastName], ['Ian', 'Walter'])
@@ -42,6 +42,6 @@ test('clone can clone Vuex store state when objectCreate is false', t => {
     state: { message },
     modules: { song: { state: { name } } }
   })
-  const copy = clone(store.state, { objectCreate: false })
+  const copy = clone(store.state)
   t.deepEqual(copy, { message, song: { name } })
 })
