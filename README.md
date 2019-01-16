@@ -21,7 +21,7 @@ in the store.
 ## Installation
 
 ```console
-npm install @ianwalter/clone --save
+yarn add @ianwalter/clone
 ```
 
 ## Usage
