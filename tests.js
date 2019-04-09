@@ -1,19 +1,20 @@
+const { test } = require('@ianwalter/bff')
 const Vue = require('vue')
 const Vuex = require('vuex')
 const clone = require('.')
 
 Vue.use(Vuex)
 
-exports['cloning an Array'] = ({ expect }) => {
+test('cloning an Array', ({ expect }) => {
   const list = [88, 'peach', [null, new Date()]]
   const copy = clone(list)
   expect(list).toEqual(copy)
   const mutated = 'mutated'
   copy.map(() => mutated)
   expect(list.every(i => i !== mutated)).toBe(true)
-}
+})
 
-exports['cloning Vuex store state when proto is false'] = ({ expect }) => {
+test('cloning Vuex store state when proto is false', ({ expect }) => {
   const message = 'Hello!'
   const name = 'The Wheel'
   const store = new Vuex.Store({
@@ -32,9 +33,9 @@ exports['cloning Vuex store state when proto is false'] = ({ expect }) => {
   expect(copy).toEqual({ message, song: { name } })
   store.commit('song/name', 'Desire')
   expect(copy.song.name).toBe(name)
-}
+})
 
-exports['clone has Object setter when proto is true'] = ({ expect }) => {
+test('clone has Object setter when proto is true', ({ expect }) => {
   const src = {
     firstName: 'Ian',
     lastName: 'Walter',
@@ -51,4 +52,4 @@ exports['clone has Object setter when proto is true'] = ({ expect }) => {
   expect([copy.firstName, copy.lastName]).toEqual(['Ian', 'Walter'])
   copy.fullName = 'Old Gregg'
   expect([copy.firstName, copy.lastName]).toEqual(['Old', 'Gregg'])
-}
+})
