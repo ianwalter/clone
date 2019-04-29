@@ -31,6 +31,7 @@
     "@ianwalter/bff": "^4.0.0",
     "@ianwalter/dist": "^3.0.0",
     "@ianwalter/eslint-config": "^1.1.0",
+    "@ianwalter/renovate-config": "^1.1.0",
     "np": "^5.0.0",
     "vue": "^2.5.17",
     "vuex": "^3.0.1"
@@ -43,9 +44,7 @@
     "url": "https://github.com/ianwalter/clone/issues"
   },
   "homepage": "https://github.com/ianwalter/clone#readme",
-  "browserslist": [
-    "> 2%, not dead"
-  ],
+  "browserslist": "> 2%, not dead",
   "babel": {
     "presets": [
       [
@@ -58,6 +57,11 @@
   },
   "eslintConfig": {
     "root": true,
+    "extends": [
+      "@ianwalter"
+    ]
+  },
+  "renovate": {
     "extends": [
       "@ianwalter"
     ]
