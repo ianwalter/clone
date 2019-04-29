@@ -24,10 +24,10 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.4.3"
+    "@babel/runtime-corejs3": "^7.4.4"
   },
   "devDependencies": {
-    "@ianwalter/babel-preset-lib": "^1.2.0",
+    "@ianwalter/babel-preset-lib": "^2.0.1",
     "@ianwalter/bff": "^4.0.0",
     "@ianwalter/dist": "^3.0.0",
     "@ianwalter/eslint-config": "^1.1.0",
@@ -44,11 +44,16 @@
   },
   "homepage": "https://github.com/ianwalter/clone#readme",
   "browserslist": [
-    "> 0.25%"
+    "> 2%, not dead"
   ],
   "babel": {
     "presets": [
-      "@ianwalter/lib"
+      [
+        "@ianwalter/lib",
+        {
+          "runtime": false
+        }
+      ]
     ]
   },
   "eslintConfig": {

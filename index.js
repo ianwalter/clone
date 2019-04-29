@@ -1,3 +1,5 @@
+import findIndex from '@babel/runtime-corejs3/core-js-stable/instance/find-index'
+
 // ES6 Map
 let map
 try { map = Map } catch (_) { /* Handling the error is unnecessary. */ }
@@ -51,7 +53,7 @@ function baseClone (src, circulars, clones, opts) {
     }
     clones.push(obj)
     Object.keys(src).forEach(k => {
-      const i = circulars.findIndex(i => i === src[k])
+      const i = findIndex(circulars).call(circulars, i => i === src[k])
       obj[k] = i > -1 ? clones[i] : baseClone(src[k], circulars, clones, opts)
     })
     return obj
