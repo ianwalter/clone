@@ -5,8 +5,8 @@
   "module": "dist/clone.m.js",
   "main": "dist/clone.js",
   "scripts": {
-    "lint": "eslint index.js tests.js",
-    "pretest": "dist --babel",
+    "lint": "eslint .",
+    "pretest": "dist",
     "test": "bff"
   },
   "keywords": [
@@ -23,11 +23,7 @@
   "files": [
     "dist"
   ],
-  "dependencies": {
-    "@babel/runtime-corejs3": "^7.4.5"
-  },
   "devDependencies": {
-    "@ianwalter/babel-preset-lib": "^2.0.2",
     "@ianwalter/bff": "^6.3.1",
     "@ianwalter/dist": "^5.0.1",
     "@ianwalter/eslint-config": "^1.1.3",
@@ -45,22 +41,15 @@
   },
   "homepage": "https://github.com/ianwalter/clone#readme",
   "browserslist": "> 2%, not dead",
-  "babel": {
-    "presets": [
-      [
-        "@ianwalter/lib",
-        {
-          "runtime": false
-        }
-      ]
-    ]
-  },
   "eslintConfig": {
     "root": true,
     "extends": [
       "@ianwalter"
     ]
   },
+  "eslintIgnore": [
+    "dist"
+  ],
   "renovate": {
     "extends": [
       "@ianwalter"
