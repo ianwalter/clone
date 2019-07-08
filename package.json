@@ -40,7 +40,6 @@
     "url": "https://github.com/ianwalter/clone/issues"
   },
   "homepage": "https://github.com/ianwalter/clone#readme",
-  "browserslist": "> 2%, not dead",
   "eslintConfig": {
     "root": true,
     "extends": [
