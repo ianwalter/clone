@@ -1,3 +1,5 @@
+const defaultOptions = { proto: false, circulars: true }
+
 // ES6 Map
 let map
 try { map = Map } catch (_) { /* Handling the error is unnecessary. */ }
@@ -6,7 +8,7 @@ try { map = Map } catch (_) { /* Handling the error is unnecessary. */ }
 let set
 try { set = Set } catch (_) { /* Handling the error is unnecessary. */ }
 
-function baseClone (src, circulars, clones, opts) {
+function baseClone (src, circulars, clones, options) {
   // Null/undefined/functions/etc
   if (!src || typeof src !== 'object' || typeof src === 'function') {
     return src
@@ -29,7 +31,7 @@ function baseClone (src, circulars, clones, opts) {
 
   // Arrays
   if (Array.isArray(src)) {
-    return src.map(i => clone(i, opts))
+    return src.map(i => clone(i, options))
   }
 
   // ES6 Maps
@@ -46,13 +48,15 @@ function baseClone (src, circulars, clones, opts) {
   if (src instanceof Object) {
     circulars.push(src)
     let obj = {}
-    if (opts.proto) {
+    if (options.proto) {
       obj = Object.create(src)
     }
     clones.push(obj)
     Object.keys(src).forEach(k => {
       const i = circulars.findIndex(i => i === src[k])
-      obj[k] = i > -1 ? clones[i] : baseClone(src[k], circulars, clones, opts)
+      obj[k] = i > -1
+        ? options.circulars ? clones[i] : '[Circular]'
+        : baseClone(src[k], circulars, clones, options)
     })
     return obj
   }
@@ -61,6 +65,6 @@ function baseClone (src, circulars, clones, opts) {
   return src
 }
 
-export default function clone (src, opts = { proto: false }) {
-  return baseClone(src, [], [], opts)
+export default function clone (src, options) {
+  return baseClone(src, [], [], Object.assign(defaultOptions, options))
 }
