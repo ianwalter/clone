@@ -66,5 +66,5 @@ function baseClone (src, circulars, clones, options) {
 }
 
 export default function clone (src, options) {
-  return baseClone(src, [], [], Object.assign(defaultOptions, options))
+  return baseClone(src, [], [], Object.assign({}, defaultOptions, options))
 }
