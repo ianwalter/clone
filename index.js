@@ -1,4 +1,4 @@
-const defaultOptions = { proto: false, circulars: true }
+const defaultOptions = { proto: false, circulars: 1 }
 
 // ES6 Map
 let map
@@ -7,6 +7,8 @@ try { map = Map } catch (_) { /* Handling the error is unnecessary. */ }
 // ES6 Set
 let set
 try { set = Set } catch (_) { /* Handling the error is unnecessary. */ }
+
+const toOccurrences = (a, i) => a.set(i, (a.get(i) || 0) + 1)
 
 function baseClone (src, circulars, clones, options) {
   // Null/undefined/functions/etc
@@ -46,18 +48,24 @@ function baseClone (src, circulars, clones, options) {
 
   // Object
   if (src instanceof Object) {
-    circulars.push(src)
+    if (options.circulars || !circulars.includes(src)) {
+      circulars.push(src)
+    }
     let obj = {}
     if (options.proto) {
       obj = Object.create(src)
     }
     clones.push(obj)
-    Object.keys(src).forEach(k => {
-      const i = circulars.findIndex(i => i === src[k])
-      obj[k] = i > -1
-        ? options.circulars ? clones[i] : '[Circular]'
-        : baseClone(src[k], circulars, clones, options)
-    })
+    for (const k of Object.getOwnPropertyNames(src)) {
+      if (circulars.includes(src[k])) {
+        const levels = options.circulars
+        const addCircular = levels &&
+          circulars.reduce(toOccurrences, new Map()).get(src[k]) < levels
+        obj[k] = addCircular ? src[k] : '[Circular]'
+      } else {
+        obj[k] = baseClone(src[k], circulars, clones, options)
+      }
+    }
     return obj
   }
 

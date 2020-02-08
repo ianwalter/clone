@@ -30,7 +30,7 @@ test('cloning Vuex store state when proto is false', ({ expect }) => {
     }
   })
   const copy = clone(store.state)
-  expect(copy).toEqual({ message, song: { name } })
+  expect(copy).toMatchSnapshot()
   store.commit('song/name', 'Desire')
   expect(copy.song.name).toBe(name)
 })
@@ -55,13 +55,13 @@ test('clone has Object setter when proto option is true', ({ expect }) => {
 })
 
 test(
-  'clone converts circulars to [Circular] string when circulars option is false'
+  'clone converts circulars to [Circular] string when circulars option is 0'
 )(({ expect }) => {
   function Podcast () {
     this.name = 'Beanicles'
     this.circular = this
   }
   const podcast = new Podcast()
-  const copy = clone(podcast, { circulars: false })
+  const copy = clone(podcast, { circulars: 0 })
   expect(copy).toEqual({ name: podcast.name, circular: '[Circular]' })
 })
