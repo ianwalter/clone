@@ -1,5 +1,3 @@
-import merge from '@ianwalter/merge'
-
 export default function clone (src) {
   // Null/undefined/functions/etc
   if (!src || typeof src !== 'object' || typeof src === 'function') {
@@ -38,7 +36,19 @@ export default function clone (src) {
 
   // Object
   if (src instanceof Object) {
-    return merge({}, src)
+    const destination = {}
+    const circulars = (this && this.circulars) || []
+    circulars.push(src)
+    for (const key in src) {
+      if (circulars.includes(src[key])) {
+        continue
+      } else if (typeof src[key] === 'object') {
+        destination[key] = clone.call({ circulars }, src[key])
+      } else {
+        destination[key] = clone(src[key])
+      }
+    }
+    return destination
   }
 
   // ???

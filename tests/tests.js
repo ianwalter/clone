@@ -1,16 +1,16 @@
 const { test } = require('@ianwalter/bff')
 const Vue = require('vue')
 const Vuex = require('vuex')
-const clone = require('.')
+const clone = require('..')
 
 Vue.use(Vuex)
 
 test('an array is cloned', ({ expect }) => {
-  const list = [{ mutated: false }]
-  const copy = clone(list)
-  expect(copy).toStrictEqual(list)
-  list.push('mutated')
-  list[0].mutated = true
+  const arr = [{ mutated: false }]
+  const copy = clone(arr)
+  expect(copy).toStrictEqual(arr)
+  arr.push('mutated')
+  arr[0].mutated = true
   expect(copy).toMatchSnapshot()
 })
 
@@ -22,6 +22,15 @@ test('a map is cloned', ({ expect }) => {
   const one = map.get('one')
   one.mutated = true
   map.set('two', 'mutated')
+  expect(copy).toMatchSnapshot()
+})
+
+test('a nested array is cloned', ({ expect }) => {
+  const nested = { arr: [{ mutated: false }] }
+  const copy = clone(nested)
+  expect(copy).toStrictEqual(nested)
+  nested.arr.push('mutated')
+  nested.arr[0].mutated = true
   expect(copy).toMatchSnapshot()
 })
 

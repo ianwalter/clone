@@ -17,6 +17,16 @@ Map {
 }
 `;
 
+exports[`a nested array is cloned 1`] = `
+Object {
+  "arr": Array [
+    Object {
+      "mutated": false,
+    },
+  ],
+}
+`;
+
 exports[`an array is cloned 1`] = `
 Array [
   Object {
