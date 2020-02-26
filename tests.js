@@ -5,16 +5,27 @@ const clone = require('.')
 
 Vue.use(Vuex)
 
-test('cloning an Array', ({ expect }) => {
-  const list = [88, 'peach', [null, new Date()]]
+test('an array is cloned', ({ expect }) => {
+  const list = [{ mutated: false }]
   const copy = clone(list)
-  expect(list).toEqual(copy)
-  const mutated = 'mutated'
-  copy.map(() => mutated)
-  expect(list.every(i => i !== mutated)).toBe(true)
+  expect(copy).toStrictEqual(list)
+  list.push('mutated')
+  list[0].mutated = true
+  expect(copy).toMatchSnapshot()
 })
 
-test('cloning Vuex store state when proto is false', ({ expect }) => {
+test('a map is cloned', ({ expect }) => {
+  const map = new Map()
+  map.set('one', { mutated: false })
+  const copy = clone(map)
+  expect(copy).toStrictEqual(map)
+  const one = map.get('one')
+  one.mutated = true
+  map.set('two', 'mutated')
+  expect(copy).toMatchSnapshot()
+})
+
+test('Vuex store state prototype properties are not copied', ({ expect }) => {
   const message = 'Hello!'
   const name = 'The Wheel'
   const store = new Vuex.Store({
@@ -35,33 +46,12 @@ test('cloning Vuex store state when proto is false', ({ expect }) => {
   expect(copy.song.name).toBe(name)
 })
 
-test('clone has Object setter when proto option is true', ({ expect }) => {
-  const src = {
-    firstName: 'Ian',
-    lastName: 'Walter',
-    get fullName () {
-      return this.firstName + ' ' + this.lastName
-    },
-    set fullName (name) {
-      const [firstName, lastName] = name.split(' ')
-      this.firstName = firstName
-      this.lastName = lastName
-    }
-  }
-  const copy = clone(src, { proto: true })
-  expect([copy.firstName, copy.lastName]).toEqual(['Ian', 'Walter'])
-  copy.fullName = 'Old Gregg'
-  expect([copy.firstName, copy.lastName]).toEqual(['Old', 'Gregg'])
-})
-
-test(
-  'clone converts circulars to [Circular] string when circulars option is 0'
-)(({ expect }) => {
+test('circular properties are not copied', ({ expect }) => {
   function Podcast () {
     this.name = 'Beanicles'
     this.circular = this
   }
   const podcast = new Podcast()
-  const copy = clone(podcast, { circulars: 0 })
-  expect(copy).toEqual({ name: podcast.name, circular: '[Circular]' })
+  const copy = clone(podcast)
+  expect(copy).toEqual({ name: podcast.name })
 })

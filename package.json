@@ -53,5 +53,8 @@
     "extends": [
       "@ianwalter"
     ]
+  },
+  "dependencies": {
+    "@ianwalter/merge": "^7.0.0"
   }
 }

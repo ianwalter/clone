@@ -1,26 +1,26 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`cloning Vuex store state when proto is false 1`] = `
+exports[`Vuex store state prototype properties are not copied 1`] = `
 Object {
-  "__ob__": Object {
-    "dep": Object {
-      "id": 7,
-      "subs": Array [],
-    },
-    "value": "[Circular]",
-    "vmCount": 0,
-  },
   "message": "Hello!",
   "song": Object {
-    "__ob__": Object {
-      "dep": Object {
-        "id": 10,
-        "subs": Array [],
-      },
-      "value": "[Circular]",
-      "vmCount": 0,
-    },
     "name": "The Wheel",
   },
 }
+`;
+
+exports[`a map is cloned 1`] = `
+Map {
+  "one" => Object {
+    "mutated": false,
+  },
+}
+`;
+
+exports[`an array is cloned 1`] = `
+Array [
+  Object {
+    "mutated": false,
+  },
+]
 `;
