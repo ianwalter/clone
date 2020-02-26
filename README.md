@@ -2,6 +2,7 @@
 > A configurable utility to clone JavaScript data (Objects, Arrays, etc)
 
 [![npm page][npmImage]][npmUrl]
+[![CI][ciImage]][ciUrl]
 
 ## About
 
@@ -40,4 +41,6 @@ Created by [Ian Walter](https://ianwalter.dev)
 
 [npmImage]: https://img.shields.io/npm/v/@ianwalter/clone.svg
 [npmUrl]: https://www.npmjs.com/package/@ianwalter/clone
+[ciImage]: https://github.com/ianwalter/clone/workflows/CI/badge.svg
+[ciUrl]: https://github.com/ianwalter/clone/actions
 [licenseUrl]: https://github.com/ianwalter/clone/blob/master/LICENSE
