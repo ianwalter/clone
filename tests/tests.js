@@ -5,36 +5,36 @@ const clone = require('..')
 
 Vue.use(Vuex)
 
-test('an array is cloned', ({ expect }) => {
+test`an array is cloned ${t => {
   const arr = [{ mutated: false }]
   const copy = clone(arr)
-  expect(copy).toStrictEqual(arr)
+  t.expect(copy).toStrictEqual(arr)
   arr.push('mutated')
   arr[0].mutated = true
-  expect(copy).toMatchSnapshot()
-})
+  t.expect(copy).toMatchSnapshot()
+}}`
 
-test('a map is cloned', ({ expect }) => {
+test`a map is cloned ${t => {
   const map = new Map()
   map.set('one', { mutated: false })
   const copy = clone(map)
-  expect(copy).toStrictEqual(map)
+  t.expect(copy).toStrictEqual(map)
   const one = map.get('one')
   one.mutated = true
   map.set('two', 'mutated')
-  expect(copy).toMatchSnapshot()
-})
+  t.expect(copy).toMatchSnapshot()
+}}`
 
-test('a nested array is cloned', ({ expect }) => {
+test`a nested array is cloned ${t => {
   const nested = { arr: [{ mutated: false }] }
   const copy = clone(nested)
-  expect(copy).toStrictEqual(nested)
+  t.expect(copy).toStrictEqual(nested)
   nested.arr.push('mutated')
   nested.arr[0].mutated = true
-  expect(copy).toMatchSnapshot()
-})
+  t.expect(copy).toMatchSnapshot()
+}}`
 
-test('Vuex store state prototype properties are not copied', ({ expect }) => {
+test`Vuex store state prototype properties are not copied ${t => {
   const message = 'Hello!'
   const name = 'The Wheel'
   const store = new Vuex.Store({
@@ -50,17 +50,17 @@ test('Vuex store state prototype properties are not copied', ({ expect }) => {
     }
   })
   const copy = clone(store.state)
-  expect(copy).toMatchSnapshot()
+  t.expect(copy).toMatchSnapshot()
   store.commit('song/name', 'Desire')
-  expect(copy.song.name).toBe(name)
-})
+  t.expect(copy.song.name).toBe(name)
+}}`
 
-test('circular properties are not copied', ({ expect }) => {
+test`circular properties are not copied ${t => {
   function Podcast () {
     this.name = 'Beanicles'
     this.circular = this
   }
   const podcast = new Podcast()
   const copy = clone(podcast)
-  expect(copy).toEqual({ name: podcast.name })
-})
+  t.expect(copy).toEqual({ name: podcast.name })
+}}`
